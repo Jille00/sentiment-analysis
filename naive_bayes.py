@@ -6,6 +6,7 @@ from collections import defaultdict
 from nltk.sentiment import util
 from tqdm import tqdm
 import re
+import time
 
 def make_unigram_feature_set(documents, min_freq=1, mark_negation=False):
     """
@@ -222,42 +223,41 @@ def evaluate_model(classifier, pos_docs, neg_docs):
 train_or_test = input("train or test? ")
 
 if train_or_test == "train":
-    train_mask = 'train/*.txt'
-    train_pos_mask = 'train/pos/*.txt'
-    train_neg_mask = 'train/neg/*.txt'
+    start_time = time.time()
+    train_pos_mask = 'aclImdb/train/pos/*.txt'
+    train_neg_mask = 'aclImdb/train/neg/*.txt'
     pos = glob(train_pos_mask)
     neg = glob(train_neg_mask)
     pos_train_set = []
     neg_train_set = []
-    for i in pos:
+    for i in tqdm(pos):
         with open(i) as f:
-            for line in tqdm(f):
+            for line in f:
                 line = re.sub(r'[^\w\s]','',line)
                 line = line.lower().split(' ')
                 pos_train_set.append(line)
-    for i in neg:
+    for i in tqdm(neg):
         with open(i) as f:
-            for line in tqdm(f):
+            for line in f:
                 line = re.sub(r'[^\w\s]','',line)
                 line = line.lower().split(' ')
                 neg_train_set.append(line)
 
-    train_mask = 'test/*.txt'
-    test_pos_mask = 'test/pos/*.txt'
-    test_neg_mask = 'test/neg/*.txt'
+    test_pos_mask = 'aclImdb/test/pos/*.txt'
+    test_neg_mask = 'aclImdb/test/neg/*.txt'
     pos = glob(test_pos_mask)
     neg = glob(test_neg_mask)
     pos_test_set = []
     neg_test_set = []
-    for i in pos:
+    for i in tqdm(pos):
         with open(i) as f:
-            for line in tqdm(f):
+            for line in f:
                 line = re.sub(r'[^\w\s]','',line)
                 line = line.lower().split(' ')
                 pos_test_set.append(line)
-    for i in neg:
+    for i in tqdm(neg):
         with open(i) as f:
-            for line in tqdm(f):
+            for line in f:
                 line = re.sub(r'[^\w\s]','',line)
                 line = line.lower().split(' ')
                 neg_test_set.append(line)
@@ -273,15 +273,16 @@ if train_or_test == "train":
         alpha=1, min_freq=2)
 
     metrics = evaluate_model(classifier, pos_test_set, neg_test_set)
-    pickle.dump(dev_metrics, open("metrics", 'wb'))    
+    pickle.dump(metrics, open("metrics", 'wb'))    
     pickle.dump(classifier, open("classifier", 'wb'))
 
     print('Development')
-    print('TP %d TN %d FP %d FN %d' % (dev_metrics['TP'], dev_metrics['TN'], dev_metrics['FP'], dev_metrics['FN']))
-    print('P %.4f R %.4f A %.4f F1 %.4f' % (dev_metrics['P'], dev_metrics['R'], dev_metrics['A'], dev_metrics['F1']))
+    print('TP %d TN %d FP %d FN %d' % (metrics['TP'], metrics['TN'], metrics['FP'], metrics['FN']))
+    print('P %.4f R %.4f A %.4f F1 %.4f' % (metrics['P'], metrics['R'], metrics['A'], metrics['F1']))
 
-
+    print("--- %s seconds ---" % (time.time() - start_time))
 elif train_or_test == "test":
+    start_time = time.time()
     pos_train_set = pickle.load(open("pos_train_set", 'rb'))
     neg_train_set = pickle.load(open("neg_train_set", 'rb'))
     training_docs = pos_train_set + neg_train_set
@@ -294,6 +295,6 @@ elif train_or_test == "test":
     print('Development')
     print('TP %d TN %d FP %d FN %d' % (dev_metrics['TP'], dev_metrics['TN'], dev_metrics['FP'], dev_metrics['FN']))
     print('P %.4f R %.4f A %.4f F1 %.4f' % (dev_metrics['P'], dev_metrics['R'], dev_metrics['A'], dev_metrics['F1']))
-
+    print("--- %s seconds ---" % (time.time() - start_time))
 else:
     print("Error occured")
