@@ -168,6 +168,9 @@ elif train_or_test == "test":
     Y_train = pickle.load(open("Y_train", 'rb'))
     Y_test = pickle.load(open("Y_test", 'rb'))
     model = pickle.load(open("RNN-model", 'rb'))
+    max_words = 600
+    X_train = sequence.pad_sequences(X_train, maxlen=max_words)
+    X_test = sequence.pad_sequences(X_test, maxlen=max_words)
 
     #ADD EXTRA EVAL OPTIONS HERE
     scores = model.evaluate(X_test, Y_test, verbose=1)
