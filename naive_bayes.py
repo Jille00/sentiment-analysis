@@ -201,22 +201,29 @@ def evaluate_model(classifier, pos_docs, neg_docs):
         * and [F1](https://en.wikipedia.org/wiki/F1_score)
     """
     dic = {"TP" : 0, "TN" : 0, "FP" : 0, "FN" : 0, "A" : 0, "P" : 0, "R" : 0, "F1" : 0}
-    for i in tqdm(pos_docs):
+    
+    # Calculate counts for 'False negatives' and 'True positives'
+    for i in pos_docs:
         result = classifier.classify(i)
-        if result == 1:
-            dic["TP"] += 1
+        if result == 0:
+            dic["FN"] += 1
         else:
-            dic["FP"] += 1
-    for i in tqdm(neg_docs):
+            dic["TP"] += 1
+            
+    # Calculate counts for 'True negatives' and 'False positives'
+    for i in neg_docs:
         result = classifier.classify(i)
         if result == 0:
             dic["TN"] += 1
         else:
-            dic["FN"] += 1
+            dic["FP"] += 1
+            
+    # Calculate the 'Recall', 'Precision', 'Accuracy' and 'F1-score'
     dic["R"] = dic["TP"] / (dic["TP"] + dic["FN"])
     dic["P"] = dic["TP"] / (dic["TP"] + dic["FP"])
     dic["A"] = (dic["TP"] + dic["TN"]) / (dic["TP"] + dic["TN"] + dic["FN"] + dic["FP"])
     dic["F1"] = 2 * (dic["P"] * dic["R"]) / (dic["P"] + dic["R"])
+    
     return dic
     
 
@@ -262,10 +269,10 @@ if train_or_test == "train":
                 line = line.lower().split(' ')
                 neg_test_set.append(line)
 
-    pickle.dump(pos_test_set, open("pos_test_set", 'wb'))
-    pickle.dump(neg_test_set, open("neg_test_set", 'wb'))
-    pickle.dump(pos_train_set, open("pos_train_set", 'wb'))
-    pickle.dump(neg_train_set, open("neg_train_set", 'wb'))
+    pickle.dump(pos_test_set, open("pos_test_set_naive_bayes", 'wb'))
+    pickle.dump(neg_test_set, open("neg_test_set_naive_bayes", 'wb'))
+    pickle.dump(pos_train_set, open("pos_train_set_naive_bayes", 'wb'))
+    pickle.dump(neg_train_set, open("neg_train_set_naive_bayes", 'wb'))
 
     classifier = NaiveBayesClassifier(
         pos_train_set, neg_train_set, 
@@ -273,8 +280,8 @@ if train_or_test == "train":
         alpha=1, min_freq=2)
 
     metrics = evaluate_model(classifier, pos_test_set, neg_test_set)
-    pickle.dump(metrics, open("metrics", 'wb'))    
-    pickle.dump(classifier, open("classifier", 'wb'))
+    pickle.dump(metrics, open("metrics_naive_bayes", 'wb'))    
+    pickle.dump(classifier, open("classifier_naive_bayes", 'wb'))
 
     print('Development')
     print('TP %d TN %d FP %d FN %d' % (metrics['TP'], metrics['TN'], metrics['FP'], metrics['FN']))
@@ -283,13 +290,13 @@ if train_or_test == "train":
     print("--- %s seconds ---" % (time.time() - start_time))
 elif train_or_test == "test":
     start_time = time.time()
-    pos_train_set = pickle.load(open("pos_train_set", 'rb'))
-    neg_train_set = pickle.load(open("neg_train_set", 'rb'))
+    pos_train_set = pickle.load(open("pos_train_set_naive_bayes", 'rb'))
+    neg_train_set = pickle.load(open("neg_train_set_naive_bayes", 'rb'))
     training_docs = pos_train_set + neg_train_set
-    pos_test_set = pickle.load(open("pos_test_set", 'rb'))
-    neg_test_set = pickle.load(open("neg_test_set", 'rb'))
-    classifier = pickle.load(open("classifier", 'rb'))
-    dev_metrics = pickle.load(open("dev_metrics", 'rb'))
+    pos_test_set = pickle.load(open("pos_test_set_naive_bayes", 'rb'))
+    neg_test_set = pickle.load(open("neg_test_set_naive_bayes", 'rb'))
+    classifier = pickle.load(open("classifier_naive_bayes", 'rb'))
+    dev_metrics = pickle.load(open("dev_metrics_naive_bayes", 'rb'))
 
     #ADD EXTRA EVAL OPTIONS HERE
     print('Development')
