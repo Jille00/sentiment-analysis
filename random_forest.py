@@ -8,6 +8,7 @@ import glob
 import re
 from tqdm import tqdm
 import pickle
+import time
 
 neg_train = glob.glob("aclImdb/train/neg/*.txt")
 pos_train = glob.glob("aclImdb/train/pos/*.txt")
@@ -25,6 +26,7 @@ def classify(corpus, classes, clf, vectorizer):
 
 train_or_test = input("train or test? ")
 if train_or_test == "train":
+    start_time = time.time()
     sentences = []
     classes = []
     for neg, pos in tqdm(zip(neg_train, pos_train)):
@@ -45,9 +47,9 @@ if train_or_test == "train":
     clf = RandomForestClassifier()
     clf.fit(X, Y)
 
-    pickle.dump(X, open("X_train_naive_bayes", 'wb'))
-    pickle.dump(Y, open("Y_train_naive_bayes", 'wb'))
-    pickle.dump(clf, open("Model_naive_bayes", 'wb'))
+    pickle.dump(X, open("X_train_random_forest", 'wb'))
+    pickle.dump(Y, open("Y_train_random_forest", 'wb'))
+    pickle.dump(clf, open("Model_random_forest", 'wb'))
 
     corpus = []
     classes2 = []
@@ -75,8 +77,11 @@ if train_or_test == "train":
 
     print("Accuracy: ",(count/len(classes2))*100) 
 
+    print("--- %s seconds ---" % (time.time() - start_time))
+
 elif train_or_test == "test":
-    clf = pickle.load(open("Model_naive_bayes", 'rb'))
+    start_time = time.time()
+    clf = pickle.load(open("Model_random_forest", 'rb'))
     
     sentences = []
     classes = []
@@ -119,6 +124,8 @@ elif train_or_test == "test":
             count +=1
 
     print("Accuracy: ", (count/len(classes2))*100)   
+    print("--- %s seconds ---" % (time.time() - start_time))
+
 
 else:
     print("An error occured")
