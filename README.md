@@ -43,3 +43,23 @@ The  probability  of  a  word  is  the  count  of  that  word  in  a  context  d
 
 ### 3.5 Random Forest
 Random forest classifiers are often used in classification and can be made byconstructing multiple decision trees (Safavian & Landgrebe, 1991) and runninga sample over all these trees to output the mode of the classes of the individualtrees.   Random  forests  are  well  known  to  extremely  overfit  on  their  trainingdata  (Segal,  2004).   Different  trees  use  different  features  to  split  the  samplesover and thus classify differently.  After enough splitting the samples end up inone category which is their label.
+
+### 3.6 Testing
+All three models are evaluated the same way.  The test samples get run throughthe model.  Based on what the model predicts and the true label, we determinethe total accuracy of the model.
+
+![accuracy = \frac{\textit{\# good classifications}}{\textit{\# total classifications}}](https://render.githubusercontent.com/render/math?math=accuracy%20%3D%20%5Cfrac%7B%5Ctextit%7B%5C%23%20good%20classifications%7D%7D%7B%5Ctextit%7B%5C%23%20total%20classifications%7D%7D)
+
+To measure the training time, we time how long the program takes to train andtest all 50 thousand samples.  To measure sample time, we run one whole testset through the model and record that time.  Memory usage gets determined bythe size of the model and not the size of the data because the data is comparableamongst all models.
+
+## 4 Results
+The metrics of all three models can be found below.
+Table 1: Statistics of all three models
+---------------------------------------
+Model name | Accuracy | Train time (sec) | Sample time (sec) | Memory usage (MB)
+--------------------------------------------------------------------------------
+RNN | 0.853 | 1253 | 60 | 39.0
+------------------------------
+Naive Bayes | 0.836 | 6649 | 1.49 | 4.6
+---------------------------------------
+Random Forest | 0.844 | 215 | 219 | 110.6
+-----------------------------------------
