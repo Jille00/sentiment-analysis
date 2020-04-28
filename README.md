@@ -26,4 +26,4 @@ Recurrent  neural  networks  have  become  state-of-the-art  models  and  replac
 
 ### Naive Bayes
 The  na ̈ıve  Bayes  uses  Bayes’  theorem  in  combination  with  an  independenceassumption between features, which is why the classifier is called na ̈ıve (mostfeatures  do  depend  on  each  other).   It  uses  word  frequencies  as  features  andcalculates  their  parameters  as  the  maximum  likelihood  estimation  (MLE)  ofthese frequencies (Rish et al., 2001).  The MLE is: 
-$\phi_f^{(y)} = \frac{count_{YF}(y, f)}{count_Y(y)}$
+![\phi_f^{(y)} = \frac{count_{YF}(y, f)}{count_Y(y)}](https://render.githubusercontent.com/render/math?math=%5Cphi_f%5E%7B(y)%7D%20%3D%20%5Cfrac%7Bcount_%7BYF%7D(y%2C%20f)%7D%7Bcount_Y(y)%7D)
