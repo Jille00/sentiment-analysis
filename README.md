@@ -44,6 +44,8 @@ The  probability  of  a  word  is  the  count  of  that  word  in  a  context  d
 ### 3.5 Random Forest
 Random forest classifiers are often used in classification and can be made byconstructing multiple decision trees (Safavian & Landgrebe, 1991) and runninga sample over all these trees to output the mode of the classes of the individualtrees.   Random  forests  are  well  known  to  extremely  overfit  on  their  trainingdata  (Segal,  2004).   Different  trees  use  different  features  to  split  the  samplesover and thus classify differently.  After enough splitting the samples end up inone category which is their label.
 
+![Alt text](relative/path/to/img.jpg?raw=true "Title")
+
 ### 3.6 Testing
 All three models are evaluated the same way.  The test samples get run throughthe model.  Based on what the model predicts and the true label, we determinethe total accuracy of the model.
 
