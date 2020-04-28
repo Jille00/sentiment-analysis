@@ -54,7 +54,7 @@ To measure the training time, we time how long the program takes to train andtes
 ## 4 Results
 The metrics of all three models can be found below.
 Table 1: Statistics of all three models
-
+---------------------------------------|
 Model name | Accuracy | Train time (sec) | Sample time (sec) | Memory usage (MB)
 -----------|----------|------------------|-------------------|------------------
 RNN | 0.853 | 1253 | 60 | 39.0
