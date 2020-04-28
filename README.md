@@ -60,3 +60,44 @@ Model name | Accuracy | Train time (sec) | Sample time (sec) | Memory usage (MB)
 RNN | 0.853 | 1253 | 60 | 39.0
 Naive Bayes | 0.836 | 6649 | 1.49 | 4.6
 Random Forest | 0.844 | 215 | 219 | 110.6
+
+## 5 Discussion
+### 5.1 Accuracy
+In  the  second  column  in  table  1  the  accuracies  of  the  models  are  displayed.All three accuracies are comparable.  The RNN performs the best.  It performs1.7% better than the worst model, the na ̈ıve Bayes.  The random forest is almostexactly in between the other two.  These results co-inside with the hypotheses.Because  all  accuracies  are  this  close  to  each  other  we  can  assume  all  modelswill classify new samples with the about same accuracy.  This means we shouldcompare them on other areas to see which one performs the best overall.
+
+### 5.2 Train time
+In  training  time,  the  random  forest  out-performs  the  other  two  significantly.This model finished 25k samples in 215 seconds.  The RNN performed the taskin  1253  seconds  (20  minutes),  a  600%  increase  from  the  random  forest.   Thena ̈ıve  Bayes  performed  the  worst.   It  finished  training  in  6649  seconds  (  twohours).  These results were expected in the hypotheses.
+
+### 5.3 Sample time
+The na ̈ıve Bayes outperformed the other models by a large margin.  It finished25k samples less than 1.5 second.  The RNN finished in exactly one minute andthe random forest took 219 seconds ( 3.5 minutes).  These results are also inline with the hypotheses.
+
+### 5.4 Memory Space
+The na ̈ıve Bayes performed the best in this category. The model required 4.6 MBof storage space.  The RNN took almost 40 MB. The random forest requiredwell  over  100  MB.  These  results  are  not  in  line  with  the  hypotheses.   Therandom forest needs to save a lot of data because it needs to make thousands ofcomparisons while the na ̈ıve Bayes only needs to store a large list with numbersand the RNN a few million parameters (just floats).
+
+### 5.5 Future work
+There  are  still  improvements  to  be  made  for  both  the  RNN  and  the  randomforest, the na ̈ıve Bayes has been optimized.  A lot of combinations of hyper pa-rameters were tried, but none of these had a positive effect on the performance.
+  For  the  RNN  it  is  possible  to  add  more  (different)  layers  in  the  network.This could possibly lead to an increase of a few percent in terms of accuracybecause the model is able to represent another dimension of information in thetext.  Adding more layers will worsen the time and space metrics because it hasto fine-tune and store more parameters than before.  Also adding layers doesnot mean an improvement in accuracy since larger models can overfit to datafaster  and  thus  worsen  the  test  set  accuracy.   This  was  not  tried  yet  due  totime-constraints in training these networks.
+  The  random  forest  also  has  room  for  improvement,  mostly  in  the  hyperparameters.  Sklearn offers more than 10 hyper parameters to change and thiscould possibly increase the performance of the model.  For example, a changein minimal node impurity could lead to a better generalized model because it issmaller and thus less overfitted.  The limiting of the amount of leaf nodes canalso lead to a smaller model.  Or maybe a lower maximum on the amount offeatures it looks over per split can increase how well the model generalizes.
+  Another improvement could be adding extra features to the dataset.  The IMDB  dataset  contains  a  file  with  URL’s  to  all  reviews  and  from  there  it  ispossible to extract extra features.  For instance, the number of users that foundthe review helpful or the number of stars given to the movie.  These featureswill not help the na ̈ıve Bayes, since that model only uses word counts, but theother two could gain performance by considering these features.
+
+## 6 Conclusion
+We presented different models and their usage in sentiment analysis. Our resultsshow  that  each  of  the  three  models  has  almost  the  same  accuracy  and  theirown advantages and disadvantages.  The model that suits you best will dependentirely on the usage.  If a quick scanning is necessary every time a user entersa review (in large companies for example), the na ̈ıve Bayes should be the usedmodel.  But if the model is gradually changing over time, the random forest willbe a better fit.  If your application is anywhere in between, the RNN fits best.
+
+## References
+Goldwater, S.  (2019).  Anlp lecture 6 n-gram models and smoothing. School ofInformatics.
+
+Hochreiter, S. (1998). The vanishing gradient problem during learning recurrentneural nets and problem solutions. International Journal of Uncertainty,Fuzziness and Knowledge-Based Systems,6(02), 107–116.
+
+Kingma, D. P., & Ba, J.  (2014). Adam:  A method for stochastic optimization.arXiv preprint arXiv:1412.6980.
+
+Lipsman, A. (2007). Online consumer-generated reviews have significant impacton offline purchase behavior. comscore.Inc. Industry Analysis, 2–28.
+
+Maas,  A.  L.,  Daly,  R.  E.,  Pham,  P.  T.,  Huang,  D.,  Ng,  A.  Y.,  &  Potts,  C.(2011,  June).    Learning  word  vectors  for  sentiment  analysis.    InPro-ceedings  of  the  49th  annual  meeting  of  the  association  for  computationallinguistics:  Human  language  technologies(pp. 142–150).  Portland, Ore-gon,  USA:  Association  for  Computational  Linguistics.   Retrieved  fromhttp://www.aclweb.org/anthology/P11-1015
+
+Mikolov, T., Karafi ́at, M., Burget, L.,ˇCernocky, J., & Khudanpur, S.  (2010).Recurrent neural network based language model. InEleventh annual con-ference of the international speech communication association.
+
+Rish, I., et al.  (2001).  An empirical study of the naive bayes classifier.  InIjcai2001 workshop on empirical methods in artificial intelligence(Vol. 3, pp.41–46).
+
+Safavian,  S. R., & Landgrebe,  D.  (1991).  A survey of decision tree classifiermethodology.IEEE transactions on systems, man, and cybernetics,21(3),660–674.
+
+Segal, M. R. (2004). Machine learning benchmarks and random forest regression.UCSF: Center for Bioinformatics and Molecular Biostatistics.  Retrievedfromhttps://escholarship.org/uc/item/35x3v9t4
