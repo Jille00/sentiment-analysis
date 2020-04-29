@@ -1,4 +1,4 @@
-# A comparison between a RNN, Random Forestand Na ̈ıve Bayes in sentiment analysis
+# A comparison between a RNN, Random Forest and Naïve Bayes in sentiment analysis
 ### Jille van der Togt
 ### March 2020
 ## 1. Abstract
