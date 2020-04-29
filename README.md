@@ -65,7 +65,7 @@ Random Forest | 0.844 | 215 | 219 | 110.6
 
 ## 5 Discussion
 ### 5.1 Accuracy
-In  the  second  column  in  table  1  the  accuracies  of  the  models  are  displayed. All three accuracies are comparable.  The RNN performs the best.  It performs1.7% better than the worst model, the Naïve Bayes.  The random forest is almost exactly in between the other two.  These results co-inside with the hypotheses. Because  all  accuracies  are  this  close  to  each  other  we  can  assume  all  models will classify new samples with the about same accuracy.  This means we should compare them on other areas to see which one performs the best overall.
+In  the  second  column  in  table  1  the  accuracies  of  the  models  are  displayed. All three accuracies are comparable.  The RNN performs the best.  It performs 1.7% better than the worst model, the Naïve Bayes.  The random forest is almost exactly in between the other two.  These results co-inside with the hypotheses. Because  all  accuracies  are  this  close  to  each  other  we  can  assume  all  models will classify new samples with the about same accuracy.  This means we should compare them on other areas to see which one performs the best overall.
 
 ### 5.2 Train time
 In  training  time,  the  random  forest  out-performs  the  other  two  significantly. This model finished 25k samples in 215 seconds.  The RNN performed the task in 1253  seconds  (20  minutes),  a  600%  increase  from  the  random  forest.   The Naïve Bayes  performed  the  worst.   It  finished  training  in  6649  seconds  (two hours).  These results were expected in the hypotheses.
